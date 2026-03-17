@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>woz.bot — The World's First AI CTO</title>
+  <meta name="description" content="Woz is an open-source AI CTO that plugs into Linear, GitHub, and Slack. Write design docs, do sprint planning, lead projects, and address code reviews — automatically.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg: '#0F1219',
+            surface: '#1A1F2E',
+            'surface-light': '#232A3B',
+            border: '#2A3148',
+            'text-primary': '#F5F0EB',
+            'text-muted': '#9A8F85',
+            frosting: '#D88EA3',
+            'frosting-light': '#E4A5B7',
+            peach: '#E8B878',
+            'peach-light': '#F0C890',
+            navy: '#2B2D5E',
+            coral: '#E06060',
+            teal: '#3A8B7A',
+          },
+          fontFamily: {
+            mono: ['JetBrains Mono', 'monospace'],
+            sans: ['IBM Plex Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background-color: #0F1219; color: #F5F0EB; }
+
+    /* Blinking cursor */
+    .cursor-blink::after {
+      content: '|';
+      animation: blink 1s step-end infinite;
+      color: #D88EA3;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Subtle glow on accent elements */
+    .glow-frosting {
+      box-shadow: 0 0 30px rgba(216, 142, 163, 0.15);
+    }
+    .glow-frosting-hover:hover {
+      box-shadow: 0 0 40px rgba(216, 142, 163, 0.25);
+    }
+
+    /* Install command copy animation */
+    .copy-feedback {
+      transition: opacity 0.2s ease;
+    }
+
+    /* Sprinkle accent bar */
+    .sprinkle-bar {
+      background: linear-gradient(90deg, #D88EA3, #E8B878, #3A8B7A, #2B2D5E, #E06060);
+    }
+
+    /* Feature card hover */
+    .feature-card {
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .feature-card:hover {
+      border-color: #D88EA3;
+      box-shadow: 0 0 20px rgba(216, 142, 163, 0.1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor-blink::after { animation: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body class="font-sans antialiased">
+
+  <!-- Sprinkle accent bar at top -->
+  <div class="sprinkle-bar h-1 w-full fixed top-0 left-0 z-50"></div>
+
+  <!-- Nav -->
+  <nav class="fixed top-1 left-0 right-0 z-40">
+    <div class="max-w-5xl mx-auto px-6 py-4 mt-3 flex items-center justify-between bg-surface/80 backdrop-blur-md rounded-xl border border-border">
+      <a href="#" class="font-mono font-bold text-lg text-text-primary cursor-pointer">
+        woz<span class="text-frosting">.bot</span>
+      </a>
+      <div class="flex items-center gap-6">
+        <a href="#features" class="text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer hidden sm:block">Features</a>
+        <a href="#get-started" class="text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer hidden sm:block">Get Started</a>
+        <a href="https://github.com/douglasqian/woz" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span class="hidden sm:inline">GitHub</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="min-h-screen flex items-center justify-center px-6 pt-24">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-surface text-sm text-text-muted mb-8">
+        <span class="w-2 h-2 rounded-full bg-teal animate-pulse"></span>
+        Open source &middot; Built on OpenClaw
+      </div>
+
+      <h1 class="font-mono font-bold text-4xl sm:text-5xl md:text-6xl leading-tight mb-6">
+        The world's first<br>
+        <span class="text-frosting">AI CTO</span>
+      </h1>
+
+      <p class="text-lg sm:text-xl text-text-muted max-w-xl mx-auto mb-10 leading-relaxed">
+        Woz plugs into
+        <span class="text-peach font-medium">Linear</span>,
+        <span class="text-peach font-medium">GitHub</span>, and
+        <span class="text-peach font-medium">Slack</span>
+        to plan sprints, lead projects, and ship code — so you can focus on what matters.
+      </p>
+
+      <!-- Install command -->
+      <div id="get-started" class="relative inline-flex items-center bg-surface border border-border rounded-lg overflow-hidden glow-frosting max-w-full">
+        <div class="px-4 sm:px-5 py-3.5 font-mono text-sm sm:text-base overflow-x-auto whitespace-nowrap">
+          <span class="text-text-muted select-none">$ </span><span class="text-text-primary">curl -fsSL</span> <span class="text-teal">https://woz.bot/install</span> <span class="text-text-primary">| sh</span>
+        </div>
+        <button
+          onclick="copyInstall()"
+          class="px-4 py-3.5 border-l border-border text-text-muted hover:text-frosting hover:bg-surface-light transition-colors duration-200 cursor-pointer flex-shrink-0"
+          aria-label="Copy install command"
+        >
+          <svg id="copy-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          <svg id="check-icon" class="w-5 h-5 hidden text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+        </button>
+      </div>
+
+      <p class="mt-4 text-sm text-text-muted">
+        macOS &middot; Linux &middot; WSL
+      </p>
+
+      <!-- Scroll hint -->
+      <div class="mt-20 text-text-muted animate-bounce">
+        <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M19 14l-7 7m0 0l-7-7"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="font-mono font-bold text-2xl sm:text-3xl text-center mb-4">
+        What Woz can do
+      </h2>
+      <p class="text-text-muted text-center mb-16 max-w-lg mx-auto">
+        Your AI CTO handles the work that slows engineering teams down.
+      </p>
+
+      <div class="grid sm:grid-cols-2 gap-5">
+        <!-- Feature 1 -->
+        <div class="feature-card bg-surface border border-border rounded-xl p-6 cursor-pointer">
+          <div class="w-10 h-10 rounded-lg bg-navy/30 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-frosting-light" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Design docs & sprint planning</h3>
+          <p class="text-text-muted text-sm leading-relaxed">
+            Writes technical design documents and breaks work into well-scoped tickets, ready for your team to ship.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-card bg-surface border border-border rounded-xl p-6 cursor-pointer">
+          <div class="w-10 h-10 rounded-lg bg-navy/30 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-peach" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Leads Linear projects</h3>
+          <p class="text-text-muted text-sm leading-relaxed">
+            Monitors project boards and automatically picks up unblocked tickets. Keeps work moving without you nudging it.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-card bg-surface border border-border rounded-xl p-6 cursor-pointer">
+          <div class="w-10 h-10 rounded-lg bg-navy/30 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Addresses code reviews</h3>
+          <p class="text-text-muted text-sm leading-relaxed">
+            Automatically responds to GitHub PR review comments, pushes fixes, and resolves conversations.
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="feature-card bg-surface border border-border rounded-xl p-6 cursor-pointer">
+          <div class="w-10 h-10 rounded-lg bg-navy/30 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-coral" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
+          </div>
+          <h3 class="font-mono font-semibold text-lg mb-2">Responds to mentions</h3>
+          <p class="text-text-muted text-sm leading-relaxed">
+            Tag <span class="font-mono text-frosting">@woz</span> in Linear or GitHub and it jumps in — answers questions, investigates issues, takes action.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="py-24 px-6">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="font-mono font-bold text-2xl sm:text-3xl text-center mb-4">
+        How it works
+      </h2>
+      <p class="text-text-muted text-center mb-16 max-w-lg mx-auto">
+        Woz is an <a href="https://openclaw.ai" target="_blank" rel="noopener noreferrer" class="text-frosting hover:text-frosting-light transition-colors duration-200 underline underline-offset-4 cursor-pointer">OpenClaw</a> fork, extended with a web server that connects to Linear and GitHub via webhooks.
+      </p>
+
+      <div class="flex flex-col gap-4">
+        <!-- Step 1 -->
+        <div class="flex items-start gap-4 bg-surface border border-border rounded-xl p-5">
+          <div class="w-8 h-8 rounded-full bg-frosting/20 text-frosting font-mono font-bold text-sm flex items-center justify-center flex-shrink-0 mt-0.5">1</div>
+          <div>
+            <h3 class="font-mono font-semibold mb-1">Install with one command</h3>
+            <p class="text-text-muted text-sm">Download Woz and connect your Linear, GitHub, and Slack accounts.</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex items-start gap-4 bg-surface border border-border rounded-xl p-5">
+          <div class="w-8 h-8 rounded-full bg-peach/20 text-peach font-mono font-bold text-sm flex items-center justify-center flex-shrink-0 mt-0.5">2</div>
+          <div>
+            <h3 class="font-mono font-semibold mb-1">Woz listens via webhooks</h3>
+            <p class="text-text-muted text-sm">A lightweight web server receives events from Linear and GitHub in real time.</p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex items-start gap-4 bg-surface border border-border rounded-xl p-5">
+          <div class="w-8 h-8 rounded-full bg-teal/20 text-teal font-mono font-bold text-sm flex items-center justify-center flex-shrink-0 mt-0.5">3</div>
+          <div>
+            <h3 class="font-mono font-semibold mb-1">Woz takes action</h3>
+            <p class="text-text-muted text-sm">Plans sprints, picks up tickets, writes code, addresses reviews — autonomously.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contribute -->
+  <section class="py-24 px-6">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="font-mono font-bold text-2xl sm:text-3xl mb-4">
+        Built in the open
+      </h2>
+      <p class="text-text-muted mb-10 max-w-md mx-auto">
+        Woz is open source. Read the code, open an issue, or submit a PR.
+      </p>
+      <a
+        href="https://github.com/douglasqian/woz"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-3 px-6 py-3 bg-frosting/10 border border-frosting/30 text-frosting hover:bg-frosting/20 rounded-lg font-mono text-sm transition-colors duration-200 cursor-pointer glow-frosting-hover"
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        Star on GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-border py-10 px-6">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="font-mono text-sm text-text-muted">
+        woz<span class="text-frosting">.bot</span>
+      </span>
+      <div class="flex items-center gap-6">
+        <a href="https://github.com/douglasqian/woz" target="_blank" rel="noopener noreferrer" class="text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer">GitHub</a>
+        <a href="https://openclaw.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer">OpenClaw</a>
+      </div>
+      <span class="text-sm text-text-muted">&copy; 2026</span>
+    </div>
+  </footer>
+
+  <script>
+    function copyInstall() {
+      navigator.clipboard.writeText('curl -fsSL https://woz.bot/install | sh');
+      const copyIcon = document.getElementById('copy-icon');
+      const checkIcon = document.getElementById('check-icon');
+      copyIcon.classList.add('hidden');
+      checkIcon.classList.remove('hidden');
+      setTimeout(() => {
+        copyIcon.classList.remove('hidden');
+        checkIcon.classList.add('hidden');
+      }, 2000);
+    }
+  </script>
+
+</body>
+</html>

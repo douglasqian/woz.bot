@@ -82,7 +82,8 @@ export default function App() {
             </a>
             <div className="hidden sm:flex items-center gap-6">
               <a href="#features" className="text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer">Features</a>
-              <a href="#how" className="text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer">How it works</a>
+              <a href="https://docs.woz.bot" target="_blank" rel="noopener noreferrer" className="text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer">Docs</a>
+              <a href="#pricing" className="text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer">Pricing</a>
             </div>
           </div>
           <div className="flex items-center gap-4">

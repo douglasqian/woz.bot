@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: #0C0E1A;
+  --color-bg-light: #131627;
+  --color-surface: #1A1E35;
+  --color-surface-light: #222842;
+  --color-border: #2A3050;
+  --color-border-light: #354060;
+  --color-text-primary: #E8E4DF;
+  --color-text-muted: #8A8DA0;
+  --color-text-dim: #5A5E75;
+  --color-frosting: #D88EA3;
+  --color-frosting-light: #E4A5B7;
+  --color-frosting-dim: #9A6575;
+  --color-peach: #E8B878;
+  --color-peach-dim: #A08050;
+  --color-navy: #2B2D5E;
+  --color-coral: #E06060;
+  --color-coral-light: #E87878;
+  --color-teal: #3A8B7A;
+  --color-teal-light: #4AA88E;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.hero-bg {
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(216, 142, 163, 0.08) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 40% at 80% 20%, rgba(43, 45, 94, 0.15) 0%, transparent 50%),
+              var(--color-bg);
+}
+
+.text-gradient-frosting {
+  background: linear-gradient(135deg, #D88EA3, #E8B878);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cursor-blink::after {
+  content: '_';
+  animation: blink 1s step-end infinite;
+  color: #D88EA3;
+  font-weight: 700;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #2A3050, transparent);
+}
+
+.mockup-glow {
+  box-shadow: 0 0 80px rgba(216, 142, 163, 0.1), 0 0 160px rgba(43, 45, 94, 0.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink::after { animation: none; }
+  html { scroll-behavior: auto; }
+}

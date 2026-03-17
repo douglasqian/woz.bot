@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>woz.bot — The World's First AI CTO</title>
-  <meta name="description" content="Woz is an open-source AI CTO that plugs into Linear, GitHub, and Slack. Write design docs, do sprint planning, lead projects, and address code reviews — automatically.">
+  <meta name="description" content="Woz is an open-source AI CTO that plugs into Linear, GitHub, and Slack. Not just another AI engineer — Woz leads entire projects, writes design docs, tests with screenshots, and triages code reviews.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍩</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,23 +15,24 @@
       theme: {
         extend: {
           colors: {
-            dough: '#FFF5E6',
-            'dough-dark': '#F0E0C8',
-            'dough-deep': '#E8D0A8',
+            bg: '#0C0E1A',
+            'bg-light': '#131627',
+            surface: '#1A1E35',
+            'surface-light': '#222842',
+            border: '#2A3050',
+            'border-light': '#354060',
+            'text-primary': '#E8E4DF',
+            'text-muted': '#8A8DA0',
+            'text-dim': '#5A5E75',
             frosting: '#D88EA3',
-            'frosting-dark': '#C47A8F',
-            'frosting-deep': '#B06878',
+            'frosting-light': '#E4A5B7',
+            'frosting-dim': '#9A6575',
             peach: '#E8B878',
-            'peach-dark': '#D4A060',
+            'peach-dim': '#A08050',
             navy: '#2B2D5E',
-            'navy-light': '#3D4080',
             coral: '#E06060',
-            'coral-light': '#E87878',
             teal: '#3A8B7A',
             'teal-light': '#4AA88E',
-            ink: '#1A1520',
-            'ink-light': '#3A3040',
-            'ink-muted': '#6A5A70',
           },
           fontFamily: {
             mono: ['Space Mono', 'monospace'],
@@ -42,47 +44,13 @@
   </script>
   <style>
     html { scroll-behavior: smooth; }
-    body { background-color: #FFF5E6; color: #1A1520; }
+    body { background-color: #0C0E1A; color: #E8E4DF; }
 
-    /* Neubrutalist shadow */
-    .shadow-brutal { box-shadow: 5px 5px 0px #1A1520; }
-    .shadow-brutal-sm { box-shadow: 3px 3px 0px #1A1520; }
-    .shadow-brutal-pink { box-shadow: 5px 5px 0px #C47A8F; }
-    .shadow-brutal-navy { box-shadow: 5px 5px 0px #2B2D5E; }
-    .shadow-brutal-teal { box-shadow: 5px 5px 0px #3A8B7A; }
-    .shadow-brutal-coral { box-shadow: 5px 5px 0px #E06060; }
-
-    /* Feature card hover */
-    .feature-card {
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .feature-card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 7px 7px 0px #1A1520;
-    }
-
-    /* Sprinkle decorations */
-    .sprinkle {
-      position: absolute;
-      width: 6px;
-      border-radius: 3px;
-      pointer-events: none;
-    }
-
-    /* Donut ring */
-    .donut-ring {
-      border-radius: 50%;
-      border: 6px solid #D88EA3;
-      background: transparent;
-    }
-
-    /* Install box glow */
-    .install-box {
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .install-box:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 7px 7px 0px #C47A8F;
+    /* Subtle gradient background for hero */
+    .hero-bg {
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(216, 142, 163, 0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 40% at 80% 20%, rgba(43, 45, 94, 0.15) 0%, transparent 50%),
+                  #0C0E1A;
     }
 
     /* Blinking cursor */
@@ -104,110 +72,341 @@
       background-clip: text;
     }
 
-    /* Badge bounce */
-    .badge-float {
-      animation: float 3s ease-in-out infinite;
+    /* Step highlight */
+    .step-item {
+      transition: background-color 0.2s ease;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(-2deg); }
-      50% { transform: translateY(-8px) rotate(2deg); }
+    .step-item:hover {
+      background-color: rgba(216, 142, 163, 0.08);
+    }
+    .step-active {
+      background-color: rgba(216, 142, 163, 0.06);
+      border: 1px solid rgba(216, 142, 163, 0.15);
     }
 
-    /* Step number wiggle on hover */
-    .step-num:hover {
-      animation: wiggle 0.3s ease;
+    /* Comparison card */
+    .compare-card {
+      transition: border-color 0.2s ease, background-color 0.2s ease;
     }
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(0); }
-      25% { transform: rotate(-8deg); }
-      75% { transform: rotate(8deg); }
+    .compare-card:hover {
+      border-color: #354060;
+      background-color: rgba(26, 30, 53, 0.8);
+    }
+
+    /* Strikethrough */
+    .strike {
+      text-decoration: line-through;
+      text-decoration-color: rgba(224, 96, 96, 0.6);
+      text-decoration-thickness: 2px;
+    }
+
+    /* Mockup glow */
+    .mockup-glow {
+      box-shadow: 0 0 80px rgba(216, 142, 163, 0.1), 0 0 160px rgba(43, 45, 94, 0.15);
+    }
+
+    /* Subtle section divider */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #2A3050, transparent);
     }
 
     @media (prefers-reduced-motion: reduce) {
       .cursor-blink::after { animation: none; }
-      .badge-float { animation: none; }
       html { scroll-behavior: auto; }
     }
   </style>
 </head>
 <body class="font-sans antialiased overflow-x-hidden">
 
-  <!-- Scattered sprinkles (decorative) -->
-  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-    <!-- Pink sprinkles -->
-    <div class="sprinkle bg-frosting" style="height:20px; top:12%; left:8%; transform:rotate(45deg); opacity:0.5;"></div>
-    <div class="sprinkle bg-frosting" style="height:16px; top:35%; right:6%; transform:rotate(-30deg); opacity:0.4;"></div>
-    <div class="sprinkle bg-frosting" style="height:14px; top:72%; left:5%; transform:rotate(70deg); opacity:0.35;"></div>
-    <!-- Navy sprinkles -->
-    <div class="sprinkle bg-navy" style="height:18px; top:20%; right:12%; transform:rotate(-60deg); opacity:0.4;"></div>
-    <div class="sprinkle bg-navy" style="height:14px; top:55%; left:10%; transform:rotate(25deg); opacity:0.3;"></div>
-    <div class="sprinkle bg-navy" style="height:16px; top:85%; right:9%; transform:rotate(-45deg); opacity:0.35;"></div>
-    <!-- Coral sprinkles -->
-    <div class="sprinkle bg-coral" style="height:16px; top:8%; left:20%; transform:rotate(-20deg); opacity:0.4;"></div>
-    <div class="sprinkle bg-coral" style="height:18px; top:45%; right:15%; transform:rotate(55deg); opacity:0.35;"></div>
-    <div class="sprinkle bg-coral" style="height:14px; top:90%; left:18%; transform:rotate(-70deg); opacity:0.3;"></div>
-    <!-- Teal sprinkles -->
-    <div class="sprinkle bg-teal" style="height:14px; top:15%; right:22%; transform:rotate(35deg); opacity:0.35;"></div>
-    <div class="sprinkle bg-teal" style="height:18px; top:60%; left:3%; transform:rotate(-40deg); opacity:0.4;"></div>
-    <div class="sprinkle bg-teal" style="height:16px; top:78%; right:4%; transform:rotate(60deg); opacity:0.3;"></div>
-    <!-- Peach sprinkles -->
-    <div class="sprinkle bg-peach" style="height:16px; top:28%; left:4%; transform:rotate(15deg); opacity:0.4;"></div>
-    <div class="sprinkle bg-peach" style="height:14px; top:50%; right:8%; transform:rotate(-50deg); opacity:0.35;"></div>
-  </div>
-
   <!-- Nav -->
-  <nav class="fixed top-0 left-0 right-0 z-40">
-    <div class="max-w-5xl mx-auto px-6 py-3 mt-4 flex items-center justify-between bg-dough border-3 border-ink rounded-2xl shadow-brutal-sm" style="border-width: 3px;">
-      <a href="#" class="font-mono font-bold text-xl text-ink cursor-pointer">
-        woz<span class="text-frosting-dark">.bot</span>
-      </a>
-      <div class="flex items-center gap-5">
-        <a href="#features" class="text-sm font-medium text-ink-muted hover:text-ink transition-colors duration-200 cursor-pointer hidden sm:block">Features</a>
-        <a href="#get-started" class="text-sm font-medium text-ink-muted hover:text-ink transition-colors duration-200 cursor-pointer hidden sm:block">Install</a>
-        <a href="https://github.com/douglasqian/woz" target="_blank" rel="noopener noreferrer"
-          class="flex items-center gap-2 px-3 py-1.5 bg-ink text-dough rounded-lg font-mono text-sm hover:bg-ink-light transition-colors duration-200 cursor-pointer shadow-brutal-sm" style="box-shadow: 3px 3px 0px #C47A8F;">
+  <nav class="fixed top-0 left-0 right-0 z-40 bg-bg/80 backdrop-blur-lg border-b border-border/50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-8">
+        <a href="#" class="font-mono font-bold text-lg text-text-primary cursor-pointer">
+          woz<span class="text-frosting">.bot</span>
+        </a>
+        <div class="hidden sm:flex items-center gap-6">
+          <a href="#features" class="text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer">Features</a>
+          <a href="#how" class="text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer">How it works</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="https://github.com/douglasqian/woz" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-sm text-text-muted hover:text-text-primary transition-colors duration-200 cursor-pointer">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           GitHub
+        </a>
+        <a href="#get-started" class="px-4 py-2 bg-frosting text-bg rounded-lg text-sm font-semibold hover:bg-frosting-light transition-colors duration-200 cursor-pointer">
+          Get started
         </a>
       </div>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="min-h-screen flex items-center justify-center px-6 pt-24 relative z-10">
-    <div class="max-w-3xl mx-auto text-center relative">
+  <!-- Hero — Devin-style split layout -->
+  <section class="hero-bg min-h-screen flex items-center px-6 pt-24 pb-16">
+    <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-      <!-- Decorative donut rings -->
-      <div class="donut-ring w-16 h-16 absolute -top-8 -left-12 opacity-30 hidden md:block" style="border-color: #E8B878;"></div>
-      <div class="donut-ring w-10 h-10 absolute top-4 -right-16 opacity-25 hidden md:block" style="border-color: #3A8B7A;"></div>
-      <div class="donut-ring w-8 h-8 absolute bottom-20 -left-20 opacity-20 hidden md:block"></div>
+      <!-- Left: Text + Steps -->
+      <div>
+        <!-- Announcement badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-frosting/20 bg-frosting/5 text-sm mb-8 cursor-pointer hover:bg-frosting/10 transition-colors duration-200">
+          <span class="text-xs font-semibold text-frosting bg-frosting/15 px-2 py-0.5 rounded-full">New</span>
+          <span class="text-text-muted">Open source &middot; Built on OpenClaw</span>
+          <svg class="w-3 h-3 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </div>
 
-      <!-- Badge -->
-      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-frosting/15 border-2 border-frosting/40 text-sm font-medium text-frosting-deep mb-8 badge-float">
-        Open source &middot; Built on OpenClaw
+        <h1 class="font-sans font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.15] mb-6 tracking-tight">
+          <span class="text-gradient-frosting">Woz,</span> the AI<br>
+          CTO
+        </h1>
+
+        <a href="#get-started" class="inline-flex items-center px-5 py-2.5 bg-text-primary text-bg rounded-lg text-sm font-semibold hover:bg-white transition-colors duration-200 cursor-pointer mb-8">
+          Start building
+        </a>
+
+        <p class="text-text-muted mb-8 text-base leading-relaxed max-w-md">
+          <span class="text-text-primary font-semibold">Lead your projects</span> with your AI CTO that plans, codes, tests, and ships.
+        </p>
+
+        <!-- Numbered steps — Devin-style -->
+        <div class="flex flex-col gap-1">
+          <div class="step-item step-active rounded-xl px-4 py-3 flex items-center gap-4">
+            <span class="w-8 h-8 rounded-full border border-frosting/40 text-frosting text-sm font-semibold flex items-center justify-center flex-shrink-0">1</span>
+            <div>
+              <span class="font-semibold text-text-primary text-sm">Project</span>
+              <p class="text-text-muted text-xs">Create Linear projects, not just tickets</p>
+            </div>
+          </div>
+          <div class="step-item rounded-xl px-4 py-3 flex items-center gap-4">
+            <span class="w-8 h-8 rounded-full border border-border text-text-dim text-sm font-semibold flex items-center justify-center flex-shrink-0">2</span>
+            <div>
+              <span class="font-semibold text-text-primary text-sm">Design</span>
+              <p class="text-text-muted text-xs">Write design docs and plan architecture</p>
+            </div>
+          </div>
+          <div class="step-item rounded-xl px-4 py-3 flex items-center gap-4">
+            <span class="w-8 h-8 rounded-full border border-border text-text-dim text-sm font-semibold flex items-center justify-center flex-shrink-0">3</span>
+            <div>
+              <span class="font-semibold text-text-primary text-sm">Test</span>
+              <p class="text-text-muted text-xs">Woz tests changes with visual screenshots</p>
+            </div>
+          </div>
+          <div class="step-item rounded-xl px-4 py-3 flex items-center gap-4">
+            <span class="w-8 h-8 rounded-full border border-border text-text-dim text-sm font-semibold flex items-center justify-center flex-shrink-0">4</span>
+            <div>
+              <span class="font-semibold text-text-primary text-sm">PR</span>
+              <p class="text-text-muted text-xs">Triage reviews from Claude, Codex, and humans</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <h1 class="font-mono font-bold text-5xl sm:text-6xl md:text-7xl leading-[1.1] mb-6 tracking-tight">
-        The world's first<br>
-        <span class="text-gradient-frosting">AI CTO</span>
-      </h1>
+      <!-- Right: Mockup — Linear-style project view -->
+      <div class="hidden lg:block">
+        <div class="mockup-glow bg-surface border border-border rounded-2xl overflow-hidden">
+          <!-- Tab bar -->
+          <div class="flex items-center gap-1 px-4 py-3 border-b border-border bg-bg-light">
+            <button class="px-3 py-1.5 bg-frosting/10 text-frosting text-xs font-medium rounded-md cursor-pointer">Linear</button>
+            <button class="px-3 py-1.5 text-text-dim text-xs font-medium rounded-md hover:text-text-muted cursor-pointer">GitHub</button>
+            <button class="px-3 py-1.5 text-text-dim text-xs font-medium rounded-md hover:text-text-muted cursor-pointer">Slack</button>
+          </div>
+          <!-- Project content -->
+          <div class="p-5">
+            <!-- Project header -->
+            <div class="flex items-center gap-3 mb-5">
+              <div class="w-3 h-3 rounded-full bg-teal"></div>
+              <span class="font-mono text-sm text-text-primary font-semibold">WOZ-42</span>
+              <span class="text-text-muted text-sm">Auth Middleware Rewrite</span>
+              <span class="ml-auto px-2 py-0.5 bg-teal/10 text-teal text-xs rounded-md font-medium">In Progress</span>
+            </div>
+            <!-- Design doc -->
+            <div class="bg-bg-light rounded-xl p-4 mb-4 border border-border/50">
+              <div class="flex items-center gap-2 mb-3">
+                <svg class="w-4 h-4 text-frosting" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                <span class="text-xs font-semibold text-text-primary">Design Doc</span>
+                <span class="text-xs text-text-dim ml-auto">by @woz</span>
+              </div>
+              <p class="text-xs text-text-muted leading-relaxed">Replace Express session middleware with JWT-based auth. Move token storage to httpOnly cookies. Add refresh token rotation with 7-day expiry...</p>
+            </div>
+            <!-- Tickets -->
+            <div class="space-y-2">
+              <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-bg-light/50 border border-border/30">
+                <svg class="w-4 h-4 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-xs text-text-primary">JWT middleware implementation</span>
+                <span class="ml-auto text-xs text-teal font-medium">Done</span>
+              </div>
+              <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-bg-light/50 border border-border/30">
+                <svg class="w-4 h-4 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-xs text-text-primary">Refresh token rotation</span>
+                <span class="ml-auto text-xs text-teal font-medium">Done</span>
+              </div>
+              <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-frosting/5 border border-frosting/15">
+                <div class="w-4 h-4 rounded-full border-2 border-frosting"></div>
+                <span class="text-xs text-text-primary">Migration script & rollback plan</span>
+                <span class="ml-auto text-xs text-frosting font-medium">In Progress</span>
+              </div>
+              <div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-bg-light/50 border border-border/30">
+                <div class="w-4 h-4 rounded-full border-2 border-border"></div>
+                <span class="text-xs text-text-muted">E2E tests + screenshot evidence</span>
+                <span class="ml-auto text-xs text-text-dim font-medium">Todo</span>
+              </div>
+            </div>
+            <!-- Woz comment -->
+            <div class="mt-4 pt-4 border-t border-border/50">
+              <div class="flex items-center gap-2 mb-2">
+                <div class="w-5 h-5 rounded-full bg-frosting/20 flex items-center justify-center">
+                  <span class="text-[10px]">🍩</span>
+                </div>
+                <span class="text-xs font-semibold text-text-primary">woz</span>
+                <span class="text-xs text-text-dim">2 min ago</span>
+              </div>
+              <p class="text-xs text-text-muted leading-relaxed">Picked up "Migration script & rollback plan" — all blockers resolved. Will test with screenshots when done.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <p class="text-lg sm:text-xl text-ink-muted max-w-xl mx-auto mb-12 leading-relaxed">
-        Woz plugs into
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-peach/20 border border-peach/40 rounded-md font-medium text-peach-dark text-base">Linear</span>
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-ink/10 border border-ink/20 rounded-md font-medium text-ink text-base">GitHub</span> and
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-teal/15 border border-teal/30 rounded-md font-medium text-teal text-base">Slack</span>
-        to plan sprints, lead projects, and ship code.
+    </div>
+  </section>
+
+  <!-- Section divider -->
+  <div class="section-divider max-w-4xl mx-auto"></div>
+
+  <!-- Counter-positioning -->
+  <section id="features" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <p class="text-frosting font-mono text-sm font-semibold mb-4 text-center tracking-wider uppercase">Why Woz</p>
+      <h2 class="font-sans font-bold text-3xl sm:text-4xl text-center mb-4 tracking-tight">
+        AI engineers do tasks.<br>
+        <span class="text-gradient-frosting">Woz runs the show.</span>
+      </h2>
+      <p class="text-text-muted text-center mb-16 max-w-xl mx-auto text-lg">
+        Every AI coding agent follows the same playbook. Woz operates a level above.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-5">
+
+        <!-- Card 1: Projects -->
+        <div class="compare-card bg-surface/50 border border-border rounded-2xl p-6 cursor-pointer">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-xs font-medium text-text-dim bg-bg-light px-2 py-1 rounded"><span class="strike">Tickets</span></span>
+            <svg class="w-4 h-4 text-text-dim" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            <span class="text-xs font-semibold text-frosting bg-frosting/10 px-2 py-1 rounded">Projects</span>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Leads entire projects</h3>
+          <p class="text-text-muted text-sm leading-relaxed">
+            Creates Linear projects, breaks them into milestones, scopes every ticket, and automatically picks up unblocked work. Woz doesn't wait to be told what to do.
+          </p>
+        </div>
+
+        <!-- Card 2: Design docs -->
+        <div class="compare-card bg-surface/50 border border-border rounded-2xl p-6 cursor-pointer">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-xs font-medium text-text-dim bg-bg-light px-2 py-1 rounded"><span class="strike">Planning</span></span>
+            <svg class="w-4 h-4 text-text-dim" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            <span class="text-xs font-semibold text-peach bg-peach/10 px-2 py-1 rounded">Design docs</span>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Writes design docs</h3>
+          <p class="text-text-muted text-sm leading-relaxed">
+            Produces full technical design documents with architecture decisions, trade-offs, and scope. Plans entire projects, not just the next ticket.
+          </p>
+        </div>
+
+        <!-- Card 3: Screenshots -->
+        <div class="compare-card bg-surface/50 border border-border rounded-2xl p-6 cursor-pointer">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-xs font-medium text-text-dim bg-bg-light px-2 py-1 rounded"><span class="strike">Testing</span></span>
+            <svg class="w-4 h-4 text-text-dim" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            <span class="text-xs font-semibold text-teal bg-teal/10 px-2 py-1 rounded">Screenshots</span>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Tests with visual evidence</h3>
+          <p class="text-text-muted text-sm leading-relaxed">
+            Tests changes end-to-end and provides screenshot evidence. You see exactly what changed before you merge. Trust, but verify.
+          </p>
+        </div>
+
+        <!-- Card 4: Triage reviews -->
+        <div class="compare-card bg-surface/50 border border-border rounded-2xl p-6 cursor-pointer">
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-xs font-medium text-text-dim bg-bg-light px-2 py-1 rounded"><span class="strike">PRs</span></span>
+            <svg class="w-4 h-4 text-text-dim" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+            <span class="text-xs font-semibold text-coral-light bg-coral/10 px-2 py-1 rounded">Triage</span>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Triages all reviewers</h3>
+          <p class="text-text-muted text-sm leading-relaxed">
+            Waits for your favorite code reviewers — <span class="font-mono text-text-primary text-xs">Claude, Codex, humans</span> — and triages feedback automatically. Pushes fixes, resolves threads, re-requests review.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section divider -->
+  <div class="section-divider max-w-4xl mx-auto"></div>
+
+  <!-- How it works -->
+  <section id="how" class="py-24 px-6">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-frosting font-mono text-sm font-semibold mb-4 text-center tracking-wider uppercase">Architecture</p>
+      <h2 class="font-sans font-bold text-3xl sm:text-4xl text-center mb-4 tracking-tight">
+        How it works
+      </h2>
+      <p class="text-text-muted text-center mb-16 max-w-lg mx-auto">
+        Woz is an <a href="https://openclaw.ai" target="_blank" rel="noopener noreferrer" class="text-frosting hover:text-frosting-light transition-colors duration-200 underline underline-offset-4 decoration-frosting/30 hover:decoration-frosting/60 cursor-pointer">OpenClaw</a> fork, extended with a web server that connects to Linear and GitHub via webhooks.
+      </p>
+
+      <div class="flex flex-col gap-3">
+        <div class="flex items-start gap-4 bg-surface/50 border border-border rounded-xl p-5 hover:border-border-light transition-colors duration-200">
+          <span class="w-8 h-8 rounded-full bg-frosting/10 text-frosting text-sm font-semibold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+          <div>
+            <h3 class="font-semibold mb-1">Install with one command</h3>
+            <p class="text-text-muted text-sm">Download Woz and connect your Linear, GitHub, and Slack accounts.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 bg-surface/50 border border-border rounded-xl p-5 hover:border-border-light transition-colors duration-200">
+          <span class="w-8 h-8 rounded-full bg-peach/10 text-peach text-sm font-semibold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+          <div>
+            <h3 class="font-semibold mb-1">Woz listens via webhooks</h3>
+            <p class="text-text-muted text-sm">A lightweight web server receives events from Linear and GitHub in real time.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4 bg-surface/50 border border-border rounded-xl p-5 hover:border-border-light transition-colors duration-200">
+          <span class="w-8 h-8 rounded-full bg-teal/10 text-teal text-sm font-semibold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+          <div>
+            <h3 class="font-semibold mb-1">Woz takes action</h3>
+            <p class="text-text-muted text-sm">Plans projects, picks up tickets, writes code, tests with screenshots, triages reviews — autonomously.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section divider -->
+  <div class="section-divider max-w-4xl mx-auto"></div>
+
+  <!-- Install -->
+  <section id="get-started" class="py-24 px-6">
+    <div class="max-w-2xl mx-auto text-center">
+      <p class="text-frosting font-mono text-sm font-semibold mb-4 tracking-wider uppercase">Get started</p>
+      <h2 class="font-sans font-bold text-3xl sm:text-4xl mb-4 tracking-tight">
+        One command to go
+      </h2>
+      <p class="text-text-muted mb-10">
+        Install Woz and start leading projects in minutes.
       </p>
 
       <!-- Install command -->
-      <div id="get-started" class="relative inline-flex items-center bg-ink border-3 border-ink rounded-xl overflow-hidden install-box shadow-brutal-pink max-w-full" style="border-width: 3px;">
+      <div class="relative inline-flex items-center bg-surface border border-border rounded-xl overflow-hidden max-w-full hover:border-border-light transition-colors duration-200">
         <div class="px-5 py-4 font-mono text-sm sm:text-base overflow-x-auto whitespace-nowrap">
-          <span class="text-ink-muted select-none">$ </span><span class="text-dough">curl -fsSL</span> <span class="text-teal-light">https://woz.bot/install</span> <span class="text-dough">| sh</span><span class="cursor-blink"></span>
+          <span class="text-text-dim select-none">$ </span><span class="text-text-primary">curl -fsSL</span> <span class="text-teal-light">https://woz.bot/install</span> <span class="text-text-primary">| sh</span><span class="cursor-blink"></span>
         </div>
         <button
           onclick="copyInstall()"
-          class="px-4 py-4 border-l-2 border-ink-light text-ink-muted hover:text-frosting hover:bg-ink-light transition-colors duration-200 cursor-pointer flex-shrink-0"
+          class="px-4 py-4 border-l border-border text-text-dim hover:text-frosting hover:bg-surface-light transition-colors duration-200 cursor-pointer flex-shrink-0"
           aria-label="Copy install command"
         >
           <svg id="copy-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
@@ -215,149 +414,47 @@
         </button>
       </div>
 
-      <p class="mt-5 text-sm text-ink-muted font-medium">
+      <p class="mt-5 text-sm text-text-dim">
         macOS &middot; Linux &middot; WSL
       </p>
     </div>
   </section>
 
-  <!-- Features -->
-  <section id="features" class="py-24 px-6 relative z-10">
-    <div class="max-w-5xl mx-auto">
-      <h2 class="font-mono font-bold text-3xl sm:text-4xl text-center mb-4">
-        What Woz can do
-      </h2>
-      <p class="text-ink-muted text-center mb-16 max-w-lg mx-auto text-lg">
-        Your AI CTO handles the work that slows teams down.
-      </p>
+  <!-- Section divider -->
+  <div class="section-divider max-w-4xl mx-auto"></div>
 
-      <div class="grid sm:grid-cols-2 gap-6">
-        <!-- Feature 1: Design docs -->
-        <div class="feature-card bg-frosting/10 border-3 border-ink rounded-2xl p-6 cursor-pointer shadow-brutal relative overflow-hidden" style="border-width: 3px;">
-          <div class="w-12 h-12 rounded-xl bg-frosting border-2 border-ink flex items-center justify-center mb-4 shadow-brutal-sm" style="box-shadow: 2px 2px 0px #1A1520;">
-            <svg class="w-6 h-6 text-dough" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
-          </div>
-          <h3 class="font-mono font-bold text-lg mb-2">Design docs & sprint planning</h3>
-          <p class="text-ink-muted text-sm leading-relaxed">
-            Writes technical design documents and breaks work into well-scoped tickets, ready for your team to ship.
-          </p>
-        </div>
-
-        <!-- Feature 2: Linear projects -->
-        <div class="feature-card bg-peach/10 border-3 border-ink rounded-2xl p-6 cursor-pointer shadow-brutal relative overflow-hidden" style="border-width: 3px;">
-          <div class="w-12 h-12 rounded-xl bg-peach border-2 border-ink flex items-center justify-center mb-4" style="box-shadow: 2px 2px 0px #1A1520;">
-            <svg class="w-6 h-6 text-ink" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
-          </div>
-          <h3 class="font-mono font-bold text-lg mb-2">Leads Linear projects</h3>
-          <p class="text-ink-muted text-sm leading-relaxed">
-            Monitors project boards and automatically picks up unblocked tickets. Keeps work moving without you nudging it.
-          </p>
-        </div>
-
-        <!-- Feature 3: Code reviews -->
-        <div class="feature-card bg-teal/10 border-3 border-ink rounded-2xl p-6 cursor-pointer shadow-brutal relative overflow-hidden" style="border-width: 3px;">
-          <div class="w-12 h-12 rounded-xl bg-teal border-2 border-ink flex items-center justify-center mb-4" style="box-shadow: 2px 2px 0px #1A1520;">
-            <svg class="w-6 h-6 text-dough" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
-          </div>
-          <h3 class="font-mono font-bold text-lg mb-2">Addresses code reviews</h3>
-          <p class="text-ink-muted text-sm leading-relaxed">
-            Automatically responds to GitHub PR review comments, pushes fixes, and resolves conversations.
-          </p>
-        </div>
-
-        <!-- Feature 4: Mentions -->
-        <div class="feature-card bg-navy/10 border-3 border-ink rounded-2xl p-6 cursor-pointer shadow-brutal relative overflow-hidden" style="border-width: 3px;">
-          <div class="w-12 h-12 rounded-xl bg-coral border-2 border-ink flex items-center justify-center mb-4" style="box-shadow: 2px 2px 0px #1A1520;">
-            <svg class="w-6 h-6 text-dough" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
-          </div>
-          <h3 class="font-mono font-bold text-lg mb-2">Responds to mentions</h3>
-          <p class="text-ink-muted text-sm leading-relaxed">
-            Tag <span class="font-mono font-bold text-frosting-dark bg-frosting/15 px-1.5 py-0.5 rounded">@woz</span> in Linear or GitHub and it jumps in — answers questions, investigates issues, takes action.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works -->
-  <section class="py-24 px-6 relative z-10">
-    <div class="max-w-3xl mx-auto">
-      <h2 class="font-mono font-bold text-3xl sm:text-4xl text-center mb-4">
-        How it works
-      </h2>
-      <p class="text-ink-muted text-center mb-16 max-w-lg mx-auto text-lg">
-        Woz is an <a href="https://openclaw.ai" target="_blank" rel="noopener noreferrer" class="text-frosting-dark hover:text-frosting-deep font-bold underline decoration-2 underline-offset-4 decoration-frosting/50 hover:decoration-frosting transition-colors duration-200 cursor-pointer">OpenClaw</a> fork, extended with a web server that connects to Linear and GitHub via webhooks.
-      </p>
-
-      <div class="flex flex-col gap-5">
-        <!-- Step 1 -->
-        <div class="flex items-start gap-5 bg-dough border-3 border-ink rounded-2xl p-5 shadow-brutal" style="border-width: 3px;">
-          <div class="step-num w-12 h-12 rounded-xl bg-frosting border-2 border-ink text-dough font-mono font-bold text-xl flex items-center justify-center flex-shrink-0 cursor-pointer" style="box-shadow: 2px 2px 0px #1A1520;">1</div>
-          <div>
-            <h3 class="font-mono font-bold text-lg mb-1">Install with one command</h3>
-            <p class="text-ink-muted text-sm">Download Woz and connect your Linear, GitHub, and Slack accounts.</p>
-          </div>
-        </div>
-
-        <!-- Step 2 -->
-        <div class="flex items-start gap-5 bg-dough border-3 border-ink rounded-2xl p-5 shadow-brutal" style="border-width: 3px;">
-          <div class="step-num w-12 h-12 rounded-xl bg-peach border-2 border-ink text-ink font-mono font-bold text-xl flex items-center justify-center flex-shrink-0 cursor-pointer" style="box-shadow: 2px 2px 0px #1A1520;">2</div>
-          <div>
-            <h3 class="font-mono font-bold text-lg mb-1">Woz listens via webhooks</h3>
-            <p class="text-ink-muted text-sm">A lightweight web server receives events from Linear and GitHub in real time.</p>
-          </div>
-        </div>
-
-        <!-- Step 3 -->
-        <div class="flex items-start gap-5 bg-dough border-3 border-ink rounded-2xl p-5 shadow-brutal" style="border-width: 3px;">
-          <div class="step-num w-12 h-12 rounded-xl bg-teal border-2 border-ink text-dough font-mono font-bold text-xl flex items-center justify-center flex-shrink-0 cursor-pointer" style="box-shadow: 2px 2px 0px #1A1520;">3</div>
-          <div>
-            <h3 class="font-mono font-bold text-lg mb-1">Woz takes action</h3>
-            <p class="text-ink-muted text-sm">Plans sprints, picks up tickets, writes code, addresses reviews — autonomously.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contribute -->
-  <section class="py-24 px-6 relative z-10">
+  <!-- Open source -->
+  <section class="py-24 px-6">
     <div class="max-w-2xl mx-auto text-center">
-      <div class="bg-frosting/15 border-3 border-ink rounded-2xl p-10 shadow-brutal relative" style="border-width: 3px;">
-        <!-- Decorative donut rings -->
-        <div class="donut-ring w-12 h-12 absolute -top-4 -right-4 opacity-40 hidden sm:block" style="border-color: #E8B878;"></div>
-        <div class="donut-ring w-8 h-8 absolute -bottom-3 -left-3 opacity-30 hidden sm:block" style="border-color: #3A8B7A;"></div>
-
-        <h2 class="font-mono font-bold text-3xl sm:text-4xl mb-4">
-          Built in the open
-        </h2>
-        <p class="text-ink-muted mb-8 max-w-md mx-auto text-lg">
-          Woz is open source. Read the code, open an issue, or submit a PR.
-        </p>
-        <a
-          href="https://github.com/douglasqian/woz"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center gap-3 px-6 py-3 bg-ink text-dough rounded-xl font-mono font-bold text-base border-3 border-ink hover:bg-ink-light transition-colors duration-200 cursor-pointer shadow-brutal-pink" style="border-width: 3px;"
-        >
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-          Star on GitHub
-        </a>
-      </div>
+      <h2 class="font-sans font-bold text-3xl sm:text-4xl mb-4 tracking-tight">
+        Built in the open
+      </h2>
+      <p class="text-text-muted mb-8 max-w-md mx-auto">
+        Woz is open source. Read the code, open an issue, or submit a PR.
+      </p>
+      <a
+        href="https://github.com/douglasqian/woz"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-3 px-5 py-2.5 bg-surface border border-border text-text-primary rounded-lg text-sm font-semibold hover:bg-surface-light hover:border-border-light transition-colors duration-200 cursor-pointer"
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        Star on GitHub
+      </a>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t-3 border-ink py-10 px-6 relative z-10" style="border-top-width: 3px;">
-    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <span class="font-mono font-bold text-ink">
-        woz<span class="text-frosting-dark">.bot</span>
+  <footer class="border-t border-border py-10 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="font-mono text-sm text-text-dim">
+        woz<span class="text-frosting-dim">.bot</span>
       </span>
       <div class="flex items-center gap-6">
-        <a href="https://github.com/douglasqian/woz" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-ink-muted hover:text-ink transition-colors duration-200 cursor-pointer">GitHub</a>
-        <a href="https://openclaw.ai" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-ink-muted hover:text-ink transition-colors duration-200 cursor-pointer">OpenClaw</a>
+        <a href="https://github.com/douglasqian/woz" target="_blank" rel="noopener noreferrer" class="text-sm text-text-dim hover:text-text-muted transition-colors duration-200 cursor-pointer">GitHub</a>
+        <a href="https://openclaw.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-text-dim hover:text-text-muted transition-colors duration-200 cursor-pointer">OpenClaw</a>
       </div>
-      <span class="text-sm text-ink-muted">&copy; 2026</span>
+      <span class="text-sm text-text-dim">&copy; 2026</span>
     </div>
   </footer>
 

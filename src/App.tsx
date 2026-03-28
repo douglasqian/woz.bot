@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { CgMonday, CgLinear, CgSlack, CgTrello, CgVercel, CgBitbucket } from "react-icons/cg";
+import { CgMonday, CgLinear, CgSlack, CgTrello, CgVercel } from "react-icons/cg";
 import { BsMicrosoftTeams } from "react-icons/bs";
-import { SiAsana, SiDiscord, SiSentry, SiDatadog, SiRender, SiGooglecloud, SiJira, SiGitlab, SiNotion, SiStripe, SiSupabase, SiCloudflare, SiMongodb, SiTelegram, SiWhatsapp, SiRedis, SiDocker, SiSalesforce, SiHubspot, SiGooglemeet, SiMixpanel, SiPosthog, SiPostgresql, SiMysql, SiFirebase } from "react-icons/si";
+import { SiAsana, SiDiscord, SiSentry, SiDatadog, SiRender, SiGooglecloud, SiJira, SiGitlab, SiNotion, SiSupabase, SiCloudflare, SiMongodb, SiTelegram, SiWhatsapp, SiRedis, SiDocker, SiSalesforce, SiHubspot, SiGooglemeet, SiMixpanel, SiPosthog, SiPostgresql, SiMysql, SiFirebase } from "react-icons/si";
 import { FaAws } from "react-icons/fa";
 import { VscAzure } from "react-icons/vsc";
 import Mockup from "./components/Mockup";
